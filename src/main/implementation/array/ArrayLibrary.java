@@ -1,4 +1,4 @@
-package main.implementation;
+package main.implementation.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ Deletion O(n)
  ======================================== */
 
 
-public class Array {
+public class ArrayLibrary {
     public static void main(String[] args) {
         List<Integer> arrayList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));
 
