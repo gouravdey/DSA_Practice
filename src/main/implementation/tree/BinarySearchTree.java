@@ -1,5 +1,7 @@
 package main.implementation.tree;
 
+import java.util.*;
+
 public class BinarySearchTree {
     public static void main(String[] args) {
         BinarySearchTreeClass binarySearchTreeClass = new BinarySearchTreeClass();
@@ -10,8 +12,14 @@ public class BinarySearchTree {
         binarySearchTreeClass.addNode(170);
         binarySearchTreeClass.addNode(15);
         binarySearchTreeClass.addNode(1);
-        binarySearchTreeClass.printTree(binarySearchTreeClass.root);
+        binarySearchTreeClass.depthFirstSearchPreOrder(binarySearchTreeClass.root);
         System.out.println();
+        binarySearchTreeClass.depthFirstSearchInOrder(binarySearchTreeClass.root);
+        System.out.println();
+        binarySearchTreeClass.depthFirstSearchPostOrder(binarySearchTreeClass.root);
+        System.out.println();
+        binarySearchTreeClass.breadthFirstSearch();
+        binarySearchTreeClass.breadthFirstSearchRecursive(new LinkedList<>(Arrays.asList(binarySearchTreeClass.root)));
         System.out.println(binarySearchTreeClass.findNode(5));
         System.out.println(binarySearchTreeClass.findNode(9));
         System.out.println(binarySearchTreeClass.findNode(4));
@@ -78,11 +86,61 @@ class BinarySearchTreeClass {
         return false;
     }
 
-    public void printTree(Node node) {
+    public void depthFirstSearchPreOrder(Node node) {
         if (node != null) {
             System.out.print(node.data + " ");
-            printTree(node.left);
-            printTree(node.right);
+            depthFirstSearchPreOrder(node.left);
+            depthFirstSearchPreOrder(node.right);
+        }
+    }
+
+    public void depthFirstSearchInOrder(Node node) {
+        if (node != null) {
+            depthFirstSearchInOrder(node.left);
+            System.out.print(node.data + " ");
+            depthFirstSearchInOrder(node.right);
+        }
+    }
+
+    public void depthFirstSearchPostOrder(Node node) {
+        if (node != null) {
+            depthFirstSearchPostOrder(node.left);
+            depthFirstSearchPostOrder(node.right);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    public void breadthFirstSearch() {
+        Node currentNode = root;
+        List<Integer> itemList = new ArrayList<>();
+        Queue<Node> itemQueue = new LinkedList<>();
+        itemQueue.add(currentNode);
+        while (itemQueue.size() > 0) {
+            currentNode = itemQueue.poll();
+            itemList.add(currentNode.data);
+            if (currentNode.left != null) {
+                itemQueue.add(currentNode.left);
+            }
+            if (currentNode.right != null) {
+                itemQueue.add(currentNode.right);
+            }
+        }
+        System.out.println(itemList);
+    }
+
+    public void breadthFirstSearchRecursive(Queue<Node> itemQueue) {
+        if (itemQueue.size() == 0) {
+            return;
+        } else {
+            Node currentNode = itemQueue.poll();
+            System.out.print(currentNode.data + " ");
+            if (currentNode.left != null) {
+                itemQueue.add(currentNode.left);
+            }
+            if (currentNode.right != null) {
+                itemQueue.add(currentNode.right);
+            }
+            breadthFirstSearchRecursive(itemQueue);
         }
     }
 }
